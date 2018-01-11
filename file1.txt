@@ -1,0 +1,249 @@
+python - request.FILES returns empty dictionary despite setting enctype="multipart/form-data" - Stack Overflow
+Stack Overflow
+Questions
+Developer Jobs
+Tags
+Users
+current community
+help
+chat
+Stack Overflow
+Meta Stack Overflow
+your communities
+Sign up or log in to customize your list.
+more stack exchange communities
+company blog
+Tour
+Start here for a quick overview of the site
+Help Center
+Detailed answers to any questions you might have
+Meta
+Discuss the workings and policies of this site
+About Us
+Learn more about Stack Overflow the company
+Business
+Learn more about hiring developers or posting ads with us
+Log In
+Sign Up
+It's back!
+Take the 2018 Developer Survey today »
+Join Stack Overflow to learn, share knowledge, and build your career.
+Email Sign Up
+or sign in with
+Google
+Facebook
+request.FILES returns empty dictionary despite setting enctype=“multipart/form-data”
+Ask Question
+up vote
+0
+down vote
+favorite
+I am trying to upload a csv file using Django but when I attempt to retrieve the file in my view, the request.FILES object is always an empty dictionary. I've followed various guides and ensured that the form is submitting a POST request and that the enctype="multipart/form-data" but I can't seem to figure out why it is always empty.
+My form code is here:
+<form action="{% url 'upload_lessons' %}" method="post" enctype="multipart/form-data" class="form-horizontal">
+{% csrf_token %}
+<div class="form-group file-upload-form-input">
+<div class="col-md-8">
+<input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+</div>
+</div>
+<div class="form-group file-upload-form-upload-button">
+<div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+<button class="btn btn-primary" type="submit" formmethod="post" formaction="{% url 'upload_lessons' %}"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+</div>
+</div>
+</form>
+My view code is here:
+def upload_lessons(request):
+if "GET" == request.method:
+return redirect('get_scheduler')
+try:
+print(request.FILES)
+print(request.body)
+except Exception as e:
+print(e)
+return redirect('get_scheduler')
+I am only testing out the file uploading process and I will be adding additional logic after I am able to read the csv file.
+Not sure if this would be helpful, but when I print request.body, an example output is as follows:
+b'csrfmiddlewaretoken=iELCfd6yPd4NZaXVSQrtBkkufxmq9FlKRtSTC9m5j0x71M5IjshmdE1eLPSnevVj&csv_file=classwithseats.csv'
+python django
+share|improve this question
+asked Dec 19 '17 at 16:01
+Keefe Tan
+11
+Is there any JavaScript that you aren't showing? You don't need formmethod and formmethod since you have already set method and action on the form.
+– Alasdair
+Dec 19 '17 at 16:56
+add a comment |
+active
+oldest
+votes
+Know someone who can answer? Share a link to this question via email, Google+, Twitter, or Facebook.
+Your Answer
+draft saved
+draft discarded
+Sign up or log in
+Sign up using Google
+Sign up using Facebook
+Sign up using Email and Password
+Post as a guest
+Name
+Email
+Post as a guest
+Name
+Email
+discard
+By posting your answer, you agree to the privacy policy and terms of service.
+Browse other questions tagged python django
+or ask your own question.
+asked
+22 days ago
+viewed
+33 times
+Blog
+Take the 2018 Developer Survey
+Farewell, Winter Bash 2017!
+Related
+30Empty Request.FILES with Django Upload forms0In Django, how can one access file fields in forms.py?5request.FILES always empty on file upload1Sending file through POST, Django/python request obj not storing correctly1File Upload from Android to Django results in empty request.FILES dictionary0Empty request.FILES in Django0Django image isn't uploaded by using javascript node from markup string2Using Ajax to load file in Django framework0How to upload a file from Angular 2 to Django Server? (enctype=“multipart/form-data”)0Uploading and processing a csv file in django using ModelForm
+Hot Network Questions
+Why don't ICs include bypass capacitors?
+How can I deal with managers that refused to accept use of common software engineering design patterns?
+SQL correct way of joining if the other parameter is null
+How to be sure my advisor's insurance recommendations are good for me?
+Did any computers use the Z80B?
+Infinite long sequence convolution error
+Only Three Books: Restarting Physics after civilization collapses
+Do I need to coat beef in flour mixture for slow cooked stew?
+Is this pirate in the background a young Edward Teague?
+If 60 is equal to LX------
+Why does the ISS have to be destroyed?
+How aware are the Phineas and Ferb characters that they're in a TV show?
+Dealing with aggressive student suspected to be cheating
+Is it accurate to compare the nuclearization of North Korea with that of Pakistan and India? Why or why not?
+What is a Green Word™?
+How does one target a piece of jewelry being worn by a player?
+Typographical emphasis on text is ambiguous
+Is there a source for not counting your money?
+How is [0,1] locally compact if 0 and 1 do not have a neighborhood in [0,1]?
+Are there any Boeing 747 still flying for commercial use?
+What kind of approval does Donald Trump need to build his wall?
+Write Moby Dick, approximately
+Is it wrong to use a boolean parameter to determine values?
+Which popular games have been studied mathematically?
+more hot questions
+question feed
+lang-py
+Stack Overflow
+Questions
+Jobs
+Developer Jobs Directory
+Salary Calculator
+Help
+Mobile
+Stack Overflow Business
+Talent
+Ads
+Enterprise
+Company
+About
+Press
+Work Here
+Legal
+Privacy Policy
+Contact Us
+Stack Exchange Network
+Technology
+Life / Arts
+Culture / Recreation
+Science
+Other
+Stack Overflow
+Server Fault
+Super User
+Web Applications
+Ask Ubuntu
+Webmasters
+Game Development
+TeX - LaTeX
+Software Engineering
+Unix & Linux
+Ask Different (Apple)
+WordPress Development
+Geographic Information Systems
+Electrical Engineering
+Android Enthusiasts
+Information Security
+Database Administrators
+Drupal Answers
+SharePoint
+User Experience
+Mathematica
+Salesforce
+ExpressionEngine® Answers
+Stack Overflow em Português
+Blender
+Network Engineering
+Cryptography
+Code Review
+Magento
+Software Recommendations
+Signal Processing
+Emacs
+Raspberry Pi
+Stack Overflow на русском
+Programming Puzzles & Code Golf
+Stack Overflow en español
+Ethereum
+Data Science
+Arduino
+Bitcoin
+more (26)
+Photography
+Science Fiction & Fantasy
+Graphic Design
+Movies & TV
+Music: Practice & Theory
+Worldbuilding
+Seasoned Advice (cooking)
+Home Improvement
+Personal Finance & Money
+Academia
+Law
+more (16)
+English Language & Usage
+Skeptics
+Mi Yodeya (Judaism)
+Travel
+Christianity
+English Language Learners
+Japanese Language
+Arqade (gaming)
+Bicycles
+Role-playing Games
+Anime & Manga
+Puzzling
+Motor Vehicle Maintenance & Repair
+more (32)
+MathOverflow
+Mathematics
+Cross Validated (stats)
+Theoretical Computer Science
+Physics
+Chemistry
+Biology
+Computer Science
+Philosophy
+more (10)
+Meta Stack Exchange
+Stack Apps
+API
+Data
+Area 51
+Blog
+Facebook
+Twitter
+LinkedIn
+site design / logo © 2018 Stack Exchange Inc; user contributions licensed under cc by-sa 3.0
+with attribution required.
+rev 2018.1.10.28332
+Stack Overflow works best with JavaScript enabled
